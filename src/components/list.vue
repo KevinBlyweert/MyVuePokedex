@@ -1,15 +1,15 @@
 <template>
     <div v-if="pokemonList" id="list">
         <div id="buttons">
-            <button id="previous" @click="getPokemons(previousUrl,offset,limit,false)" v-show="previousUrl">Previous page</button>
-            <button id="next" @click="getPokemons(nextUrl,offset,limit,true)" v-show="nextUrl">Next page</button>
+            <button id="previous" @click="navigate(false)" v-show="previousUrl">&#60;</button>
+            <button id="next" @click="navigate(true)" v-show="nextUrl">&#62;</button>
         </div>
         <div id="listItem">
-            <listItem  v-for="(x,index) in pokemonList" :pokemon-name="x.name" :pokemon-url="x.url"/>
+            <listItem  v-for="(x,index) in pokemonList" :key="x" :pokemon-name="x.name" :pokemon-url="x.url"/>
         </div>
         <div id="buttons">
-            <button id="previous" @click="getPokemons(previousUrl,offset,limit,false)" v-show="previousUrl">Previous page</button>
-            <button id="next" @click="getPokemons(nextUrl,offset,limit,true)" v-show="nextUrl">Next page</button>
+            <button id="previous" @click="navigate(false)" v-show="previousUrl">&#60;</button>
+            <button id="next" @click="navigate(true)" v-show="nextUrl">&#62;</button>
         </div>
     </div>
     <p v-else>Loading...</p>
@@ -19,32 +19,34 @@ import listItem from './listItem.vue'
 export default{
     data(){
         return {
+            url:'https://pokeapi.co/api/v2/pokemon',
             pokemonList:'',
             previousUrl:'',
             nextUrl:'',
-            offset:20,limit:20,
+            offset:0,limit:20,
         }
     },
     components:{
         listItem
     },
     methods:{
-        async getPokemons(url,offset,limit,next) {
-            const response = await fetch(`${url}?limit=${limit}&offset=${offset}`)
+        async getPokemons() {
+            const response = await fetch(`${this.url}?limit=${this.limit}&offset=${this.offset}`)
             const APIres = await response.json()
             this.pokemonList = APIres.results
             this.previousUrl = APIres.previous
-            this.offset = next ? this.offset + this.limit : this.offset - this.limit
             this.nextUrl = APIres.next
-        }
+        },
+        navigate(next){this.offset = next ? this.offset + this.limit : this.offset - this.limit;this.getPokemons()},
     },
     created(){
-        this.getPokemons('https://pokeapi.co/api/v2/pokemon')
+        this.getPokemons()
     }
 }
 </script>
 <style scoped>
 #list{display: flex;flex-direction: column;justify-content: space-between;}
-#listItem{width: 100%;display: flex;flex-direction: row;flex-wrap: wrap;flex-grow: 1;margin-top: 50px;}
+#listItem{width: 100%;display: flex;flex-direction: row;flex-wrap: wrap;flex-grow: 1;margin-top: 50px;justify-content: center;}
 #buttons{display: flex;flex-direction: row;gap: 60px;justify-content: center;}
+button{border: none;color: white;background-color: #c6403d;font-weight: bold;font-size: 1.2em;&:hover{background-color:rgba(255,255,255,0.3)}}
 </style>
