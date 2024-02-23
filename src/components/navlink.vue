@@ -1,5 +1,5 @@
 <template>
-    <a href="" @click.prevent="">{{itemName}}</a>
+    <a href="/">{{itemName}}</a>
 </template>
 <script>
 export default{

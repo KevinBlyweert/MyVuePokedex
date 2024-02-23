@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="pokemon">
         <h1 id="pokeName">#{{ id }} - {{ pokemonName }}</h1>
         <img :src="IMG" alt="Front sprite for {{ pokemonName }}">
         <div id="types" v-if="pokeTypes">
@@ -34,8 +34,14 @@ export default{
 }
 </script>
 <style scoped>
-div{width: 30%;max-width: 20vh;height: 120px;display: flex;flex-direction: column;justify-content: space-between;align-items: center;
-&:hover img{filter: drop-shadow(0 0 0.75rem rgb(57, 20, 220));}}
+#pokemon{
+    position: relative;
+    width: 30%;max-width: 20vh;height: 120px;display: flex;flex-direction: column;justify-content: space-between;align-items: center;
+    img{will-change: filter; transition:filter .3s ease-in-out;}
+    &:hover img{
+        filter: drop-shadow(0 0 0.75rem rgb(57, 20, 220));
+    }
+}
 h1{width: 100%;height: 2em;text-align: center;text-transform: capitalize;}
-#types{display: flex;flex-direction: row;justify-content: end;transform: translateX(50%);}
+#types{display: flex;flex-direction: column;justify-content: end;gap:5px;top:50%;transform:translateY(-50%);position: absolute;right: 0px;align-items: end;}
 </style>
