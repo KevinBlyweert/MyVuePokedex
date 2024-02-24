@@ -14,7 +14,7 @@ export default{
     data(){
         return {
             navOpen:false,
-            navItems:["Pokemon","Types"],
+            navItems:["Pokemon"],
             windowWidth:window.innerWidth
         }
     },
