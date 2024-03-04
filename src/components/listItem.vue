@@ -45,5 +45,5 @@ export default{
     }
 }
 h1{width: 100%;font-size: 1.2em;text-align: center;text-transform: capitalize;}
-#types{display: flex;flex-direction: column;justify-content: end;gap:5px;top:50%;transform:translateY(-50%);position: absolute;right: 0px;align-items: end;}
+#types{display: flex;flex-direction: column;justify-content: end;gap:5px;top:50%;transform:translateY(-50%);position: absolute;right: 5px;align-items: end;}
 </style>

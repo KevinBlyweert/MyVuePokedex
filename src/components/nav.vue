@@ -5,7 +5,7 @@
         <span class="bottom"></span>
     </button>
     <nav id="nav" v-bind:class="{open : navOpen}" v-show="navOpen || windowWidth" >
-        <Navlink v-for="x in navItems" :item-name="x" />
+        <Navlink v-for="x in navItems" :item-name="x" @emit="receiveEmit"/>
     </nav>
 </template>
 <script>
@@ -14,32 +14,46 @@ export default{
     data(){
         return {
             navOpen:false,
-            navItems:["Pokemon"],
+            navItems:["Pokemon","Types"],
             windowWidth:window.innerWidth
         }
     },
     components:{
         Navlink
     },
+    methods:{
+        receiveEmit(item){console.log(item)},
+        resizeHandler(){this.windowWidth = window.innerWidth}
+    },
+    created() {
+        window.addEventListener("resize", this.resizeHandler);
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.resizeHandler);
+    },
+    watch:{
+        windowWidth(val){if (val>700) this.navOpen = false;}
+    }
 }
 </script>
 <style scoped>
 #nav{
-    display: none;
-    /* position: absolute;
-    display: none;
-    height: 0;bottom: 0;
+    position: absolute;
+    width: 135px;
+    top: 50%;
+    right: 0;
+    height: 0;
+    bottom: 0;
+    will-change: height;
     transition: all .5s;
-    padding: 15px;*/
+    & button{visibility: hidden;}
     &.open{
-        position: absolute;
         display: flex;
         flex-direction: column;
-        top: 50%;
-        right: 0;
-        padding-top: 52px;
+        padding-top: 52px;padding-bottom: 15px;gap: 10px;
         background-color: #fff;
-        width: 100px;height: 90px;
+        height: 60px;
+        & button{visibility: visible;}
     }
 }
 #burger{
@@ -91,6 +105,6 @@ export default{
 }
 @media (min-width: 700px) {
   #burger{display:none}
-  #nav{display: flex;flex-direction: row;justify-content: end;gap: 50px;align-items: center;padding: 15px;}
+  #nav{position: relative;display: flex;flex-direction: row;justify-content: end;gap: 50px;align-items: center;padding: 15px;height: auto;& button{height: auto;visibility: visible;}}
 }
 </style>
