@@ -37,8 +37,8 @@ export default{
 <style scoped>
 #pokemon{
     position: relative;
-    width: 30%;max-width: 20vh;height: 120px;display: flex;flex-direction: column;justify-content: space-between;align-items: center;background-color: rgba(0,0,0,.1);border-radius:20px;
-    img{transition:all .3s ease-in-out;}
+    width: 30%;max-width: 20vh;min-width: 10vh; height: 120px;display: flex;flex-direction: column;justify-content: space-between;align-items: center;background-color: rgba(0,0,0,.1);border-radius:20px;
+    img{transition:all .3s ease-in-out;height: 100%;}
     &:hover img{
         filter: drop-shadow(0 0 0.75rem rgb(57, 20, 220));
         transform: scale(1.2,1.2);
